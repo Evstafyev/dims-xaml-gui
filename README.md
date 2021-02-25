@@ -5,9 +5,9 @@ Dynamic Inventory Managements System based on PowerShell with XAML GUI
 ## Где взять конфигурацию ?
 Конфигурация скрипта расположена в файле config.xml  
 В составе конфигурационного файла представлены следующие параметры:  
-0. Узел Form:
+1. Узел Form:  
   - FormPath, путь к файлу разметки формы XAML
   - LoaderPath, путь к файлу скрипта - загрузчика формы
-1. Узел exportPath:
+2. Узел exportPath:  
   - tempPath, временный каталог для хранения отчетов
   - 
