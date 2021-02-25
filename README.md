@@ -9,5 +9,8 @@ Dynamic Inventory Managements System based on PowerShell with XAML GUI
   - FormPath, путь к файлу разметки формы XAML -  mainForm.xaml
   - LoaderPath, путь к файлу .ps скрипта - загрузчика формы, - loader.ps1
 2. Узел exportPath:  
-  - tempPath, временный каталог для хранения отчетов
-  - 
+  - tempPath, путь к каталогу для хранения отчетов
+  - logPath, путь к кататлогу для хранения логов
+3. Узел adSearchBase:
+  - wksDn, DistinguishedName в текущей конфигурации Active Directory, из которого должны бьть получены данные о записях рабочих станций для сканирования
+  - usrDn, DistinguishedName в текущей конфигурации Active Directory, из которого должны быть получены данные о записях пользователей
