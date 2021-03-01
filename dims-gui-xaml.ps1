@@ -445,7 +445,14 @@ Try {
 
 }
 
-Catch {$errs.add("AD error: $($adErr.ErrorRecord)")}
+Catch{
+
+     Write-Debug $adErr
+        
+     $adErr | Out-File $logPath -Append
+
+     return $adErr
+}
 
 
 function Decode {
@@ -490,6 +497,8 @@ Write-Progress -Activity “Scanning workstations..”`
          }
 }
 
+Write-Progress -Activity “Scanning workstations..” -Completed
+
 foreach ($ws in $wsUp) {
 
      $wksCbox.Items.add($ws) | Out-null
@@ -516,8 +525,11 @@ if($wksCbox.Items.Count -gt 0){
 
 } else {
 
-Write-Debug "Error: ComboBox is empty."
+    $errMsg = '"Error: ComboBox is empty."'
 
+    Write-Debug $errMsg
+
+    Write-Output "[$(Get-TimeStamp -type 1)] $errMsg" | Out-File $logPath -Append
 }
 
 # output ad counters 
@@ -531,7 +543,7 @@ $disUsrTxtb.Text = $getAdUsrDis.Count
 $totalWks.Text = $getAdWksEn.Count + $getAdWksDis.Count
 $totalUsr.Text = $getAdUsrEn.Count + $getAdUsrDis.Count
 
-# ping scan output
+# ping scan results output
 
 $upHstTxtb.Text = $wsUp.Count
 $dwnHstTxtb.Text = $wsDwn.Count
@@ -728,9 +740,19 @@ $usbDevBtn.Add_Click({
 
     # get USB devices
 
+    $stopWatch = [System.Diagnostics.Stopwatch]::StartNew()
+
     $getUsbDevices = Get-PcData -type USB -computername $wksCbox.SelectedItem
 
     $getUsbDevices | select Name, Manufacturer, PNPDeviceID, Service, Status | ogv -Title "USB devices on $($wksCbox.SelectedItem)"
+
+    Write-Debug "Get USB data from $($wksCbox.SelectedItem) successfully!"
+
+    Write-Output "[$(Get-TimeStamp -type 1)] Get USB data from $($wksCbox.SelectedItem) successfully!" | Out-File $logPath -Append
+
+    Write-Debug "Query execution time: $stopTimeMin sec."
+
+    Write-Output "[$(Get-TimeStamp -type 1)] Query execution time: $stopTimeMin sec." | Out-File $logPath -Append
 
 })
 
@@ -738,15 +760,27 @@ $hddBtn.Add_Click({
 
     # get HDD
 
+    $stopWatch = [System.Diagnostics.Stopwatch]::StartNew()
+
     $getHdd = Get-PcData -type HDD -computername $wksCbox.SelectedItem
 
     $getHdd | select Model, @{n='Size, GB'; e={[math]::Round($_.size/1GB, 2)}}, Caption | ogv -Title "HDD on $($wksCbox.SelectedItem)"
+
+    Write-Debug "Get HDD data from $($wksCbox.SelectedItem) successfully!"
+
+    Write-Output "[$(Get-TimeStamp -type 1)] Get HDD data from $($wksCbox.SelectedItem) successfully!" | Out-File $logPath -Append
+
+    Write-Debug "Query execution time: $stopTimeMin sec."
+
+    Write-Output "[$(Get-TimeStamp -type 1)] Query execution time: $stopTimeMin sec." | Out-File $logPath -Append
 
 })
 
 $ramBtn.Add_Click({
 
     # get RAM
+
+    $stopWatch = [System.Diagnostics.Stopwatch]::StartNew()
 
     $getRam = Get-PcData -type RAM -computername $wksCbox.SelectedItem
 
@@ -756,26 +790,48 @@ $ramBtn.Add_Click({
     @{n='Voltage'; e={$_.ConfiguredVoltage/1000}} | 
     ogv -Title "RAM on $($wksCbox.SelectedItem)"
 
+    $stopTimeMin = [math]::Round($stopWatch.Elapsed.TotalMinutes,2)
+    
+    Write-Debug "Get RAM data from $($wksCbox.SelectedItem) successfully!"
+
+    Write-Output "[$(Get-TimeStamp -type 1)] Get RAM data from $($wksCbox.SelectedItem) successfully!" | Out-File $logPath -Append
+
+    Write-Debug "Query execution time: $stopTimeMin sec."
+
+    Write-Output "[$(Get-TimeStamp -type 1)] Query execution time: $stopTimeMin sec." | Out-File $logPath -Append
+
 })
 
 $dspBtn.Add_Click({
 
     # get DISPLAY
 
+    $stopWatch = [System.Diagnostics.Stopwatch]::StartNew()
+
     $getDisplay = Get-PcData -type DISPLAY -computername $wksCbox.SelectedItem
 
     $getDisplay | select @{n='Vendor'; e={Decode $_.ManufacturerName -notmatch 0}}, ` 
     @{n='Product Code'; e={Decode $_.ProductCodeID -notmatch 0}}, `
     @{n='Serial Number'; e={Decode $_.SerialNumberID -notmatch 0}}, `
-    @{n='Model name'; e={Decode $_.UserFriendlyName  -notmatch 0}} |
+    @{n='Model name'; e={Decode $_.UserFriendlyName -notmatch 0}} |
     ogv -Title "DISPLAY on $($wksCbox.SelectedItem)"
 
+    $stopTimeMin = [math]::Round($stopWatch.Elapsed.TotalMinutes,2)
 
+    Write-Debug "Get DISPLAY data from $($wksCbox.SelectedItem) successfully!"
+
+    Write-Output "[$(Get-TimeStamp -type 1)] Get DISPLAY data from $($wksCbox.SelectedItem) successfully!" | Out-File $logPath -Append
+
+    Write-Debug "Query execution time: $stopTimeMin sec."
+
+    Write-Output "[$(Get-TimeStamp -type 1)] Query execution time: $stopTimeMin sec." | Out-File $logPath -Append
 })
 
 $prntDevBtn.Add_Click({
 
     # get PRINTER
+
+    $stopWatch = [System.Diagnostics.Stopwatch]::StartNew()
 
     $getPrinter = Get-PcData -type PRINTER -computername $wksCbox.SelectedItem
 
@@ -783,11 +839,23 @@ $prntDevBtn.Add_Click({
     Default, Network, PortName, Shared, Sharename, Location | 
     ogv -Title "PRINTER on $($wksCbox.SelectedItem)"
 
+    $stopTimeMin = [math]::Round($stopWatch.Elapsed.TotalMinutes,2)
+    
+    Write-Debug "Get PRINTER data from $($wksCbox.SelectedItem) successfully!"
+
+    Write-Output "[$(Get-TimeStamp -type 1)] Get PRINTER data from $($wksCbox.SelectedItem) successfully!" | Out-File $logPath -Append
+
+    Write-Debug "Query execution time: $stopTimeMin sec."
+
+    Write-Output "[$(Get-TimeStamp -type 1)] Query execution time: $stopTimeMin sec." | Out-File $logPath -Append
+
 })
 
 $nicBtn.Add_Click({
 
     # get NIC
+
+    $stopWatch = [System.Diagnostics.Stopwatch]::StartNew()
 
     $getNic = Get-PcData -type NIC -computername $wksCbox.SelectedItem
 
@@ -806,6 +874,16 @@ $nicBtn.Add_Click({
     @{n='Domain suffix search order'; e={$_.dnsdomainsuffixsearchorder}}, 
     @{n='DNS servers search order'; e={$_.dnsserversearchorder}} |
     ogv -Title "NIC on $($wksCbox.SelectedItem)"
+
+    $stopTimeMin = [math]::Round($stopWatch.Elapsed.TotalMinutes,2)
+    
+    Write-Debug "Get NIC data from $($wksCbox.SelectedItem) successfully!"
+
+    Write-Output "[$(Get-TimeStamp -type 1)] Get NIC data from $($wksCbox.SelectedItem) successfully!" | Out-File $logPath -Append
+    
+    Write-Debug "Query execution time: $stopTimeMin sec."
+
+    Write-Output "[$(Get-TimeStamp -type 1)] Query execution time: $stopTimeMin sec." | Out-File $logPath -Append
 
 })
 
