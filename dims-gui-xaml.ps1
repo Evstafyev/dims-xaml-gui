@@ -641,6 +641,9 @@ $scanBtn.Add_Click({
         $getOsVer = Get-PcData -type OS -computername $wksCbox.SelectedItem
         $getMobo = Get-PcData -type MOBO -computername $wksCbox.SelectedItem
         $getRam = Get-PcData -type RAM -computername $wksCbox.SelectedItem
+
+        # ram calculations 
+
         $getRamSumm = $([math]::Round($getCs.TotalPhysicalMemory / 1GB, 2)).ToString() + " GB"
         $getRamType = Get-RamType -speed $($getRam.Speed)
 
