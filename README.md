@@ -1,6 +1,6 @@
 # DIMS XAML GUI
 Dynamic Inventory Managements System based on PowerShell with XAML GUI
-![](gui_.png)
+![Screenshot](gui_.PNG)
 ## Назначение
 Скрипт используется для быстрого сбора инветарных данных о хостах окружения. Для управления реализован графический интерфейс на базе XAML. 
 ## Конфигурация
