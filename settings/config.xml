@@ -5,8 +5,8 @@
 		<LoaderPath>$env:DIMS\gui\loader.ps1</LoaderPath>
 	</Form>
 	<exportPath>
-		<tempPath>$env:DIMS\dims\temp\dims-gui\</tempPath>
-		<logPath>$env:DIMS\log\dims-gui\</logPath>
+		<tempPath>$env:DIMS\temp\</tempPath>
+		<logPath>$env:DIMS\log\</logPath>
 	</exportPath>
 	<adSearchBase>
 		<wksDN>OU=Ln,OU=L4,OU=L3,OU=L2,OU=L1,DC=test,DC=domain,DC=ru</wksDN>
