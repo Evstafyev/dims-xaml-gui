@@ -78,7 +78,24 @@ Dynamic Inventory Managements System based on PowerShell with XAML GUI
 4. **Display** - отчет о используемых мониторах
 5. **Printers** - отчет о подключнных принтерах 
 ## Что внутри?
-Получение данных о состоянии хостов реализовано посредством выполнения WMI запросов к классам Win32. Запросы выполняются синхронно. В данной реализации, множественные асинхронные запросы не поддерживаются.
+Получение данных о состоянии хостов реализовано посредством выполнения WMI запросов к классам Win32. Запросы выполняются синхронно. В данной реализации, множественные асинхронные запросы не поддерживаются. Пример основных типов запросов из конструкции switch функции Get-PcData
+```powershell
+        switch($type){
+
+        "CS" {$data = gwmi Win32_ComputerSystem -cn $computername -ErrorAction Stop -ErrorVariable $err}
+        "CPU" {$data = gwmi Win32_Processor -cn $computername -ErrorAction Stop -ErrorVariable $err}
+        "BIOS" {$data = gwmi Win32_BIOS -cn $computername -ErrorAction Stop -ErrorVariable $err}
+        "OS" {$data = gwmi Win32_OperatingSystem -cn $computername -ErrorAction Stop -ErrorVariable $err}
+        "MOBO" {$data = gwmi Win32_Baseboard -cn $computername -ErrorAction Stop -ErrorVariable $err}
+        "RAM" {$data = gwmi Win32_PhysicalMemory -cn $computername -ErrorAction Stop -ErrorVariable $err}
+        "USB" {$data = gwmi Win32_UsbDevice -cn $computername -ErrorAction Stop -ErrorVariable $err}
+        "HDD" {$data = gwmi Win32_DiskDrive -cn $computername -ErrorAction Stop -ErrorVariable $err}
+        "NIC" {$data = gwmi Win32_NetworkAdapterConfiguration -cn $computername -ErrorAction Stop -ErrorVariable $err}
+        "PRINTER" {$data = gwmi Win32_Printer -cn $computername -ErrorAction Stop -ErrorVariable $err}
+        "DISPLAY" {$data = gwmi WmiMonitorID -Namespace root\wmi -cn $computername -ErrorAction Stop -ErrorVariable $err}
+
+        }
+```
 ## Как запустить?
 ```powershell
 powershell.exe .\dims-gui-xaml.ps1
