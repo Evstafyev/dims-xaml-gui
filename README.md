@@ -43,6 +43,16 @@ Dynamic Inventory Managements System based on PowerShell with XAML GUI
   - "Users", всего доступно УЗ пользователей
   - "UP", всего рабочих станций в статусе UP
   - "Down", всего рабочих станций в статусе Down
+4. Область Workstation, содержит основную информаци о рабочей станции:
+  - "Model", модель системного блока (класс Win32_ComputerSystem)
+  - "Serial", серийный номер (класс Win32_BIOS)
+  - "OS", вресия операционной системы (класс Win32_OperatingSystem_
+  - "CPU", модель ЦПУ (класс Win32_Processor)
+  - "Cores", количество ядер ЦПУ (класс Win32_Processor)
+  - "MOBO", серийный номер материнской платы (класс Win32_Baseboard)
+  - "RAM", суммарный объем оперативной памяти (класс Win32_PhysicalMemory)
+  - "TYPE", тип памяти - определен по частоте (класс Win32_PhysicalMemory)
+  - "BANKS", суммарное количество планок памяти (класс Win32_PhysicalMemory)
 ### Коротко
 1. Скрипт получает конфигурацию из файла config.xml
 2. Выполняется сборка XAML интерфейса внутри функции Get-Xaml, из файла источника
