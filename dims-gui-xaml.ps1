@@ -8,7 +8,7 @@ $errs = @{}
 
 # deafult path to script location using DIMS evn.variable
 
-$configPath = "$env:DIMS\settings\dims-gui\config.xml"
+$configPath = "$env:DIMS\settings\config.xml"
 
 # get .xml config
 
