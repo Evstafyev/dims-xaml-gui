@@ -24,14 +24,14 @@ Dynamic Inventory Managements System based on PowerShell with XAML GUI
 Основные элементы:
 1. wksCbox - комбобокс, содержащий имена доступных на момент сканирования хостов
 2. Область NIC - содержит сведения об основном сетевом адаптере хоста:
-  - статус подключения "ICMPv4 Status"
-  - тип подключения "Connection"
-  - текущий IP адрес "IPv4 address"
-  - статус DHCP "DHCP status"
-  - дату получения аренды "Lease obtained"
-  - адрес шлюза "Gateway"
-  - MAC-адрес
-  - модель "Model"
+  - "ICMPv4 Status", статус подключения 
+  - "Connection", тип подключения 
+  - "IPv4 address", текущий IP адрес 
+  - "DHCP status", статус DHCP 
+  - "Lease obtained", дату получения аренды 
+  - "Gateway", адрес шлюза 
+  - "MAC", MAC-адрес сетевого адаптера
+  - "Model", модель сетевого адаптера
 3. Область Active Directory:
   - "USR DN", откуда получен список имен пользователей
   - "WKS DN", откуда получены список рабочих станций
