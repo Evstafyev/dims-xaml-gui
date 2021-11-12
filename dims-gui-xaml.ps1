@@ -64,7 +64,7 @@ function Get-AdDn {
 
         }
 
-        if($w -like 'russianpost'){
+        if($w -like 'bigdealcompany'){
 
             $domainStr += $w
 
